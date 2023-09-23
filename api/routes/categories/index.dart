@@ -2,6 +2,9 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:dart_frog/dart_frog.dart';
+import 'package:category_repository/category_repository.dart';
+
+// categories/ endpoint
 
 FutureOr<Response> onRequest(
   RequestContext context,
@@ -20,6 +23,7 @@ FutureOr<Response> onRequest(
 }
 
 Future<Response> _get(RequestContext context) async {
-  // Return all the categories
-  return Response.json(body: []);
+  final categoryRepository = context.read<CategoryRepository>();
+  final categories = await categoryRepository.getCategories();
+  return Response.json(body: categories);
 }

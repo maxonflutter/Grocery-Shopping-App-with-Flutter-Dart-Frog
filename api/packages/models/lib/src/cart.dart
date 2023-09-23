@@ -4,6 +4,7 @@ import 'package:uuid/uuid.dart';
 import 'dart:convert';
 
 import 'cart_item.dart';
+import 'product.dart';
 
 class Cart extends Equatable {
   final String userId;
@@ -24,22 +25,26 @@ class Cart extends Equatable {
     );
   }
 
-  int get totalQuantity => cartItems.fold(0, (total, item) => total + item.quantity);
+  int get totalQuantity =>
+      cartItems.fold(0, (total, item) => total + item.quantity);
 
-  double get totalPrice => cartItems.fold(0, (total, item) => total + item.subtotal);
+  double get totalPrice =>
+      cartItems.fold(0, (total, item) => total + item.subtotal);
 
   @override
   List<Object> get props => [userId, cartItems];
 
   factory Cart.fromJson(Map<String, dynamic> json) => Cart(
-    userId: json['userId'] ?? '',
-    cartItems: (json['cartItems'] as List).map((i) => CartItem.fromJson(i)).toList(),
-  );
+        userId: json['userId'] ?? '',
+        cartItems: (json['cartItems'] as List)
+            .map((i) => CartItem.fromJson(i))
+            .toList(),
+      );
 
   Map<String, dynamic> toJson() => {
-    'userId': userId,
-    'cartItems': cartItems.map((item) => item.toJson()).toList(),
-  };
+        'userId': userId,
+        'cartItems': cartItems.map((item) => item.toJson()).toList(),
+      };
 
   static List<Cart> sampleData = [
     Cart(
@@ -49,8 +54,10 @@ class Cart extends Equatable {
           id: Uuid().v4(),
           product: Product(
             id: Uuid().v4(),
+            description: 'A delicious apple.',
             name: 'Apple',
             price: 1.99,
+            categoryId: '1',
             imageUrl: 'https://source.unsplash.com/random/?apple',
           ),
           quantity: 5,
@@ -60,8 +67,10 @@ class Cart extends Equatable {
           id: Uuid().v4(),
           product: Product(
             id: Uuid().v4(),
+            description: 'A delicious orange.',
             name: 'Orange',
             price: 0.99,
+            categoryId: '1',
             imageUrl: 'https://source.unsplash.com/random/?orange',
           ),
           quantity: 3,
@@ -77,7 +86,9 @@ class Cart extends Equatable {
           product: Product(
             id: Uuid().v4(),
             name: 'Banana',
+            description: 'A delicious banana.',
             price: 0.69,
+            categoryId: '1',
             imageUrl: 'https://source.unsplash.com/random/?banana',
           ),
           quantity: 10,

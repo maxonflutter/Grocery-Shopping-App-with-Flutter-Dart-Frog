@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:equatable/equatable.dart';
 import 'package:uuid/uuid.dart';
 
@@ -33,18 +32,19 @@ class Category extends Equatable {
   List<Object?> get props => [id, name, description, imageUrl];
 
   factory Category.fromJson(Map<String, dynamic> json) => Category(
-    id: json['id'] ?? Uuid().v4(),
-    name: json['name'] ?? '',
-    description: json['description'] ?? '',
-    imageUrl: json['imageUrl'] ?? 'https://source.unsplash.com/random/?category',
-  );
+        id: json['id'] ?? Uuid().v4(),
+        name: json['name'] ?? '',
+        description: json['description'] ?? '',
+        imageUrl:
+            json['imageUrl'] ?? 'https://source.unsplash.com/random/?category',
+      );
 
   Map<String, dynamic> toJson() => {
-    'id': id,
-    'name': name,
-    'description': description,
-    'imageUrl': imageUrl,
-  };
+        'id': id,
+        'name': name,
+        'description': description,
+        'imageUrl': imageUrl,
+      };
 
   static List<Category> sampleData = [
     Category(
