@@ -25,5 +25,5 @@ FutureOr<Response> onRequest(
 Future<Response> _get(RequestContext context) async {
   final categoryRepository = context.read<CategoryRepository>();
   final categories = await categoryRepository.getCategories();
-  return Response.json(body: categories);
+  return Response.json(body: {'categories': categories});
 }

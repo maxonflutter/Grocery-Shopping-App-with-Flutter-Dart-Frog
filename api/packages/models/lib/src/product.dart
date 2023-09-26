@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:equatable/equatable.dart';
 import 'package:uuid/uuid.dart';
 
@@ -24,7 +23,16 @@ class Product extends Equatable {
   });
 
   @override
-  List<Object> get props => [id, name, description, price, imageUrl, categoryId, isPopular, isTrending];
+  List<Object> get props => [
+        id,
+        name,
+        description,
+        price,
+        imageUrl,
+        categoryId,
+        isPopular,
+        isTrending
+      ];
 
   Product copyWith({
     String? id,
@@ -54,7 +62,8 @@ class Product extends Equatable {
       name: json['name'] ?? '',
       description: json['description'] ?? '',
       price: json['price'] ?? 0.0,
-      imageUrl: json['imageUrl'] ?? 'https://source.unsplash.com/random/?product',
+      imageUrl:
+          json['imageUrl'] ?? 'https://source.unsplash.com/random/?product',
       categoryId: json['categoryId'] ?? '',
       isPopular: json['isPopular'] ?? false,
       isTrending: json['isTrending'] ?? false,

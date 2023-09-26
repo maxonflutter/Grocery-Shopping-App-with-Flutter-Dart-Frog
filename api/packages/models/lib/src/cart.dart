@@ -1,7 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:equatable/equatable.dart';
 import 'package:uuid/uuid.dart';
-import 'dart:convert';
 
 import 'cart_item.dart';
 import 'product.dart';

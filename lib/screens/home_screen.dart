@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:grocery_shopping_app/blocs/home/home_bloc.dart';
 import 'package:models/models.dart';
 
 import '../widgets/app_bottom_nav_bar.dart';
@@ -61,51 +63,63 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: AppBottomNavBar(index: 0),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            _buildSectionTitle(
-              textTheme,
-              'Popular Categories',
-              onPressed: () {},
-            ),
-            SizedBox(
-              height: 130,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: categories.length,
-                itemBuilder: (context, index) {
-                  final category = categories[index];
-                  return InkWell(
-                    onTap: () {
-                      context.goNamed(
-                        'category',
-                        pathParameters: {'categoryId': category.id},
-                      );
-                    },
-                    child: Container(
-                      width: 80,
-                      margin: const EdgeInsets.only(right: 8.0),
-                      child: Column(
-                        children: [
-                          Image.network(
-                            category.imageUrl!,
-                            height: 80,
+      body: BlocBuilder<HomeBloc, HomeState>(
+        builder: (context, state) {
+          if (state.status == HomeStatus.loading ||
+              state.status == HomeStatus.initial) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (state.status == HomeStatus.loaded) {
+            return Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                children: [
+                  _buildSectionTitle(
+                    textTheme,
+                    'Popular Categories',
+                    onPressed: () {},
+                  ),
+                  SizedBox(
+                    height: 130,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: categories.length,
+                      itemBuilder: (context, index) {
+                        final category = categories[index];
+                        return InkWell(
+                          onTap: () {
+                            context.goNamed(
+                              'category',
+                              pathParameters: {'categoryId': category.id},
+                            );
+                          },
+                          child: Container(
                             width: 80,
-                            fit: BoxFit.cover,
+                            margin: const EdgeInsets.only(right: 8.0),
+                            child: Column(
+                              children: [
+                                Image.network(
+                                  category.imageUrl!,
+                                  height: 80,
+                                  width: 80,
+                                  fit: BoxFit.cover,
+                                ),
+                                const SizedBox(height: 8.0),
+                                Text(category.name, maxLines: 2),
+                              ],
+                            ),
                           ),
-                          const SizedBox(height: 8.0),
-                          Text(category.name, maxLines: 2),
-                        ],
-                      ),
+                        );
+                      },
                     ),
-                  );
-                },
+                  ),
+                ],
               ),
-            ),
-          ],
-        ),
+            );
+          } else {
+            return const Center(child: Text('Something went wrong!'));
+          }
+        },
       ),
     );
   }
