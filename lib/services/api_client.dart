@@ -50,6 +50,7 @@ class ApiClient {
         if (brand != null) 'brand': brand,
       },
     );
+
     return _handleRequest(
       (headers) => _httpClient.get(uri, headers: headers),
     );

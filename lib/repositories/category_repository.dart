@@ -17,9 +17,7 @@ class CategoryRepository {
 
   Future<List<Category>> getCategories() async {
     try {
-      print('Get');
       final response = await apiClient.getCategories();
-      print(response);
 
       if (response['categories'] != null) {
         return response['categories']

@@ -11,7 +11,7 @@ class Product extends Equatable {
   final bool isPopular;
   final bool isTrending;
 
-  Product({
+  const Product({
     required this.id,
     required this.name,
     required this.description,
@@ -21,6 +21,15 @@ class Product extends Equatable {
     this.isPopular = false,
     this.isTrending = false,
   });
+
+  static const empty = Product(
+    id: '',
+    name: '',
+    description: '',
+    price: 0.0,
+    imageUrl: '',
+    categoryId: '',
+  );
 
   @override
   List<Object> get props => [

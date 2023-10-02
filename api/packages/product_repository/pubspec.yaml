@@ -1,7 +1,7 @@
 name: product_repository
 description: A new Flutter package project.
 version: 0.0.1
-homepage:
+publish_to: none
 
 environment:
   sdk: '>=3.1.0 <4.0.0'
@@ -10,7 +10,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  models:
+    path: ../models
 
+    
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:dart_frog/dart_frog.dart';
+import 'package:product_repository/product_repository.dart';
 
 FutureOr<Response> onRequest(RequestContext context, String productId) async {
   switch (context.request.method) {
@@ -18,6 +19,7 @@ FutureOr<Response> onRequest(RequestContext context, String productId) async {
 }
 
 Future<Response> _get(RequestContext context, String productId) async {
-  // Get one product based on the ID
-  return Response.json(body: []);
+  final productRepository = context.read<ProductRepository>();
+  final product = await productRepository.getProductById(productId);
+  return Response.json(body: product);
 }
