@@ -21,6 +21,37 @@ body:
   - type: markdown
     attributes:
       value: "### (Optional) Fill the information below to give Junior AI more detailed information"      
+  - type: textarea
+    id: snippets
+    attributes:
+      label: Any relevant code snippet
+      description: Please copy and paste any relevant code snippet for the task. 
+      render: shell
+  - type: textarea
+    id: file_references
+    attributes:
+      label: Any relevant file references
+      description: Please copy and paste the path of any relevant files from the project repository
+      render: shell
+  - type: dropdown
+    id: automated_workflows
+    attributes:
+      label: Automated Workflows
+      description: Do you think any of these automated workflows fit well with your current request?
+      options:
+        - None of the options
+        - API Client Workflow
+        - BLoC Workflow
+        - Cubit Workflow
+        - Data Model Workflow
+        - GoRouter Workflow
+        - Hive Workflow
+        - Localization Workflow
+        - Widget Breakdown Workflow
+        - Theme Workflow
+      default: 0
+    validations:
+      required: false  
   - type: dropdown
     id: code_or_test
     attributes:
@@ -45,34 +76,4 @@ body:
       default: 0
     validations:
       required: false
-
-  - type: textarea
-    id: snippets
-    attributes:
-      label: Any relevant code snippet
-      description: Please copy and paste any relevant code snippet for the task. 
-      render: shell
-  - type: textarea
-    id: file_references
-    attributes:
-      label: Any relevant file references
-      description: Please copy and paste the path of any relevant files from the project repository
-      render: shell
-
-  - type: dropdown
-    id: code_generator
-    attributes:
-      label: Code Generator
-      description: Do you think any of these code generators fit well with your current request?
-      options:
-        - None of the options
-        - API Client Generator
-        - BLoC Generator
-        - Cubit Generator
-        - Data Model Generator
-        - GoRouter Generator
-        - Screen Generator
-        - Theme Generator
-      default: 0
-    validations:
-      required: false  
+    
