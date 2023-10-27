@@ -20,6 +20,6 @@ FutureOr<Response> onRequest(RequestContext context, String productId) async {
 
 Future<Response> _get(RequestContext context, String productId) async {
   final productRepository = context.read<ProductRepository>();
-  final product = await productRepository.getProductById(productId);
-  return Response.json(body: product);
+  final products = await productRepository.getProductById(productId);
+  return Response.json(body: products);
 }

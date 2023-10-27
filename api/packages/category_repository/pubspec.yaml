@@ -1,7 +1,8 @@
 name: category_repository
 description: A new Flutter package project.
 version: 0.0.1
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: 'none'
+homepage:
 
 environment:
   sdk: '>=3.1.0 <4.0.0'

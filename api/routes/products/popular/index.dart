@@ -20,5 +20,5 @@ FutureOr<Response> onRequest(RequestContext context) async {
 Future<Response> _get(RequestContext context) async {
   final productRepository = context.read<ProductRepository>();
   final products = await productRepository.getPopularProducts();
-  return Response.json(body: {'products': products});
+  return Response.json(body: products);
 }

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:grocery_shopping_app/blocs/home/home_bloc.dart';
 import 'package:models/models.dart';
 
+import '../blocs/home/home_bloc.dart';
+import '../widgets/app_app_bar.dart';
 import '../widgets/app_bottom_nav_bar.dart';
+import '../widgets/grocery_loading_indicator.dart';
 import '../widgets/grocery_product_list.dart';
 import '../widgets/grocery_product_of_the_day.dart';
-import '../widgets/grocery_search_text_form_field.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -17,83 +18,41 @@ class HomeScreen extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
 
-    final categories = Category.sampleData;
-
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: colorScheme.primaryContainer,
-        leading: IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.menu),
-        ),
-        centerTitle: true,
-        title: Column(
-          children: [
-            Text(
-              'Pickup',
-              style: textTheme.bodySmall,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Location 1',
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyLarge!
-                      .copyWith(fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(width: 8.0),
-                const Icon(Icons.arrow_drop_down),
-              ],
-            ),
-          ],
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Badge(
-              isLabelVisible: true,
-              label: Text('2'),
-              child: const Icon(Icons.shopping_cart),
-            ),
-          ),
-        ],
-        bottom: PreferredSize(
-          preferredSize: Size.fromHeight(56.0),
-          child: GrocerySearchTextFormField(),
-        ),
-      ),
-      bottomNavigationBar: AppBottomNavBar(index: 0),
+      appBar: const AppAppBar(),
       body: BlocBuilder<HomeBloc, HomeState>(
         builder: (context, state) {
-          if (state.status == HomeStatus.loading ||
-              state.status == HomeStatus.initial) {
-            return const Center(child: CircularProgressIndicator());
+          if (state.status == HomeStatus.initial ||
+              state.status == HomeStatus.loading) {
+            return const GroceryLoadingIndicator();
           }
           if (state.status == HomeStatus.loaded) {
             return SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     _buildSectionTitle(
                       textTheme,
                       'Popular Categories',
                       onPressed: () {},
                     ),
+                    const SizedBox(height: 8.0),
                     SizedBox(
-                      height: 130,
+                      height: 130.0,
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
-                        itemCount: categories.length,
-                        itemBuilder: (context, index) {
-                          final category = categories[index];
+                        itemCount: state.popularCategories.length,
+                        itemBuilder: (BuildContext context, int index) {
                           return InkWell(
                             onTap: () {
                               context.goNamed(
                                 'category',
-                                pathParameters: {'categoryId': category.id},
+                                pathParameters: {
+                                  'categoryId':
+                                      state.popularCategories[index].id,
+                                },
                               );
                             },
                             child: Container(
@@ -102,13 +61,17 @@ class HomeScreen extends StatelessWidget {
                               child: Column(
                                 children: [
                                   Image.network(
-                                    category.imageUrl!,
+                                    state.popularCategories[index].imageUrl ??
+                                        'https://via.placeholder.com/80',
                                     height: 80,
                                     width: 80,
                                     fit: BoxFit.cover,
                                   ),
                                   const SizedBox(height: 8.0),
-                                  Text(category.name, maxLines: 2),
+                                  Text(
+                                    state.popularCategories[index].name,
+                                    maxLines: 2,
+                                  ),
                                 ],
                               ),
                             ),
@@ -128,15 +91,23 @@ class HomeScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 8.0),
                     GroceryProductList(products: state.popularProducts),
+                    _buildSectionTitle(
+                      textTheme,
+                      'Featured Products',
+                      onPressed: () {},
+                    ),
+                    const SizedBox(height: 8.0),
+                    GroceryProductList(products: state.featuredProducts),
                   ],
                 ),
               ),
             );
           } else {
-            return const Center(child: Text('Something went wrong!'));
+            return const Text('Something went wrong');
           }
         },
       ),
+      bottomNavigationBar: const AppBottomNavBar(index: 0),
     );
   }
 

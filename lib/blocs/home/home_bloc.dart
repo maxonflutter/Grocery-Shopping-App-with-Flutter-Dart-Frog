@@ -29,17 +29,19 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   ) async {
     emit(state.copyWith(status: HomeStatus.loading));
     try {
-      await Future.delayed(const Duration(milliseconds: 500));
+      await Future.delayed(const Duration(seconds: 2));
       final categories = _categoryRepository.getCategories();
       final products = _productRepository.getProducts();
+
       final results = await Future.wait([categories, products]);
 
       emit(
         state.copyWith(
           status: HomeStatus.loaded,
+          popularCategories: results[0] as List<Category>,
           popularProducts: results[1] as List<Product>,
+          featuredProducts: results[1] as List<Product>,
           productOfTheDay: results[1].first as Product,
-          categories: results[0] as List<Category>,
         ),
       );
     } catch (_) {

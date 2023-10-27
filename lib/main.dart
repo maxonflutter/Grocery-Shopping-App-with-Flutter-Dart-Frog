@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'blocs/home/home_bloc.dart';
-import 'navigator/app_router.dart';
+import 'navigation/app_router.dart';
 import 'repositories/category_repository.dart';
 import 'repositories/product_repository.dart';
 import 'services/api_client.dart';
