@@ -1,9 +1,13 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:cart_repository/cart_repository.dart';
 import 'package:dart_frog/dart_frog.dart';
 
 FutureOr<Response> onRequest(
-    RequestContext context, String userId, String itemId) async {
+  RequestContext context,
+  String userId,
+  String itemId,
+) async {
   switch (context.request.method) {
     case HttpMethod.delete:
       return _delete(context, userId, itemId);
@@ -18,7 +22,11 @@ FutureOr<Response> onRequest(
 }
 
 Future<Response> _delete(
-    RequestContext context, String userId, String itemId) async {
-  // Remove one item from the cart
+  RequestContext context,
+  String userId,
+  String itemId,
+) async {
+  final cartRepository = context.read<CartRepository>();
+  await cartRepository.removeFromCart(userId, itemId);
   return Response.json(body: 'The item has been removed from the cart.');
 }

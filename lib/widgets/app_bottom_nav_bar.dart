@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class AppBottomNavBar extends StatelessWidget {
-  const AppBottomNavBar({super.key, required this.index});
+  const AppBottomNavBar({
+    super.key,
+    required this.index,
+  });
 
   final int index;
 
@@ -29,9 +33,30 @@ class AppBottomNavBar extends StatelessWidget {
           selectedIndex: index,
           indicatorColor: Colors.transparent,
           onDestinationSelected: (value) {
-            print(value);
+            switch (value) {
+              case 0:
+                context.goNamed('home');
+                break;
+              case 1:
+                context.goNamed(
+                  'category',
+                  pathParameters: {'categoryId': '1'},
+                );
+                break;
+              case 2:
+                context.goNamed('scan');
+                break;
+              case 3:
+                context.goNamed('orders');
+                break;
+              case 4:
+                // context.goNamed('...');
+                break;
+              default:
+                context.goNamed('home');
+            }
           },
-          destinations: const [
+          destinations: const <Widget>[
             Padding(
               padding: EdgeInsets.only(top: 8.0),
               child: NavigationDestination(

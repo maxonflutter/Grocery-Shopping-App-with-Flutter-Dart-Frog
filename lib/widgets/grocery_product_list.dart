@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:models/models.dart';
 
+import '../blocs/cart/cart_bloc.dart';
+
 class GroceryProductList extends StatelessWidget {
   const GroceryProductList({
     super.key,
@@ -54,7 +56,11 @@ class GroceryProductList extends StatelessWidget {
                       ],
                     ),
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        context
+                            .read<CartBloc>()
+                            .add(AddToCart(userId: '12345', product: product));
+                      },
                       icon: const Icon(Icons.add),
                     ),
                   ],

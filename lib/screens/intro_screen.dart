@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:video_player/video_player.dart';
 
 class IntroScreen extends StatefulWidget {
@@ -13,13 +14,15 @@ class _IntroScreenState extends State<IntroScreen> {
 
   @override
   void initState() {
+    super.initState();
     _controller = VideoPlayerController.asset('assets/videos/intro.mp4')
       ..initialize().then((_) {
         _controller.play();
+        // Use the compute provided setLooping method to loop your video.
         _controller.setLooping(true);
+        // Ensure the correct widget is built.
         setState(() {});
       });
-    super.initState();
   }
 
   @override
@@ -29,7 +32,7 @@ class _IntroScreenState extends State<IntroScreen> {
 
     return Scaffold(
       body: Stack(
-        children: [
+        children: <Widget>[
           SizedBox.expand(
             child: FittedBox(
               fit: BoxFit.cover,
@@ -57,30 +60,33 @@ class _IntroScreenState extends State<IntroScreen> {
             child: Column(
               children: [
                 FilledButton(
-                  onPressed: () {},
                   style: FilledButton.styleFrom(
-                    minimumSize: const Size.fromHeight(48.0),
+                    minimumSize: const Size(double.infinity, 48.0),
                   ),
+                  onPressed: () {
+                    context.goNamed('register');
+                  },
                   child: Text(
                     'Login or Register',
                     style: textTheme.titleMedium!.copyWith(
-                      color: colorScheme.background,
+                      color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
                 const SizedBox(height: 16.0),
                 OutlinedButton(
-                  onPressed: () {},
                   style: OutlinedButton.styleFrom(
-                    minimumSize: const Size.fromHeight(48.0),
-                    side: BorderSide(color: colorScheme.background, width: 2.0),
+                    side: BorderSide(color: colorScheme.background, width: 2),
+                    minimumSize: const Size(double.infinity, 48.0),
                   ),
+                  onPressed: () => context.goNamed('home'),
                   child: Text(
-                    'Shop as Guest',
+                    'Shop as a Guest',
                     style: textTheme.titleMedium!.copyWith(
-                        color: colorScheme.background,
-                        fontWeight: FontWeight.bold),
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ],
@@ -93,7 +99,7 @@ class _IntroScreenState extends State<IntroScreen> {
 
   @override
   void dispose() {
-    _controller.dispose();
     super.dispose();
+    _controller.dispose();
   }
 }

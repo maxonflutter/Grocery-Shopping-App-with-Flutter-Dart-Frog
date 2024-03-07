@@ -10,12 +10,24 @@ class ProductRepository {
   Future<List<Product>> getProducts() async {
     final response = await apiClient.getProducts();
 
-    if (response['products'] != null) {
-      return response['products']
-          .map<Product>((json) => Product.fromJson(json))
+    if (response is List) {
+      return response
+          .map((json) => Product.fromJson(json as Map<String, dynamic>))
           .toList();
     } else {
-      return [];
+      throw Exception('Failed to load products from the API');
+    }
+  }
+
+  Future<List<Product>> getProductsByCategoryId(String categoryId) async {
+    final response = await apiClient.getProductsByCategoryId(categoryId);
+
+    if (response is List) {
+      return response
+          .map((json) => Product.fromJson(json as Map<String, dynamic>))
+          .toList();
+    } else {
+      throw Exception('Failed to load products from the API');
     }
   }
 }
