@@ -1,12 +1,9 @@
 # Flutter Grocery Shopping App
-
 Welcome to the Grocery Shopping App with Flutter, Dart Frog and the BLoC Pattern! This project aims to create a grocery shopping app powered by Dart Frog as its backend server.
 
-### Full code available at: https://sowl.co/s/bm98ky
 ### Video tutorial: https://youtu.be/eLCUDRvDkoE
 
 ## Features
-
 1. **Intro Screen**: Welcomes users with a captivating background video.
 2. **Login & Registration**: Sleek UIs ready to be integrated with backend functionality in the future.
 3. **Home Screen**: Central hub to see popular categories and top-selling groceries. 
@@ -36,10 +33,8 @@ Welcome to the Grocery Shopping App with Flutter, Dart Frog and the BLoC Pattern
 |:---:|:---:|:---:|
 | Welcome Screen  | Login Screen | Home Screen |
 | ![Cart](screenshots/cart.png) | ![Category](screenshots/category.png) | ![Order History](screenshots/order_history.png) |
-|:---:|:---:|:---:|
 | Cart Screen | Category Screen with Bottom Sheet | Order History Screen|
 | ![Order Status](screenshots/order_status.png) | ![Search](screenshots/search.png) |  |
-|:---:|:---:|:---:|
 | Order Status Screen | Search Screen | |
 
 
